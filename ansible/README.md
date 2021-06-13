@@ -4,13 +4,13 @@ Scripts, diagrams and documentation used to deploy an ELK Stack deployment in Az
 ## Automated ELK Stack Deployment
 
 The files in this repository were used to configure the network depicted below.
-
 ![Azure ELK Stack Diagram](./images/diagram_filename.png)
-
 These files have been tested and used to generate a live ELK Stack deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the `yml` files may be used to install only certain pieces of it, such as Filebeat.
 
-  - _TODO: Enter the playbook file._
 [Install DVWA Web Server Playbook](./dvwa/install-dvwa.yml)
+[Install ELK Stack Server Playbook](./ELK/install-elk.yml)
+[Install Filebeat Syslog Service Playbook](./Filebeat/filebeat-playbook.yml)
+[Install Docker Metrics Service Playbook](./Metricbeat/metricbeat-playbook.yml)
 
 This document contains the following details:
 - Description of the Topology
@@ -25,23 +25,25 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly available, in addition to restricting access to the network.
-- _TODO: What aspect of security do load balancers protect? What is the advantage of a jump box?_
+Load balancing ensures that the application will be highly available, in addition to restricting access to the network. Load balancers are also one way to mitigate a DoS as it can balance the load accress many web application servers. Typically load balancers include a **health probe** to check all of the servers in its pool are functioning appropiately before sending traffic to them or it will stop sending traffic to missing or poor perfoming servers.
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the _____ and system _____.
-- _TODO: What does Filebeat watch for?_
+A Jump Box is similar to a gateway router as it becomes a single point of a protected network exposed to the public network as it sits in front of the other machines that are not exposed to the Internet. To further control access only specified IP addresses and port `22` are allowed access to the Jump Box. SSH has it is security issues and that is why asynchronous encryption keys were used to esnure a higher degree of protection than usernames and passwords. 
+
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the log data and system logs.
+
+Filebeat watches the system log data
 - _TODO: What does Metricbeat record?_
 
 The configuration details of each machine may be found below.
-_Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
 
-| Name       | Function    | IP Address | Operating System   |
-|------------|-------------|------------|--------------------|
-| Jump Box   | Gateway     | 10.0.0.4   | Linux Ubuntu 20.04 |
-| web-1      | DVWA        | 10.0.0.5   | Linux Ubuntu 20.04 |
-| web-2      | DVWA        | 10.0.0.6   | Linux Ubuntu 20.04 |
-| web-3      | DVWA        | 10.0.0.7   | Linux Ubuntu 20.04 |
-| elk-server | ELK Stack   | 10.1.0.4   | Linux Ubuntu 20.04 |
+| Name       | Function    |   IP Address   | Operating System   |
+|------------|-------------|----------------|--------------------|
+| PSG358-20  | Workstation | 192.168.69.232 | Windows 10 Pro     |
+| Jump Box   | Gateway     | 10.0.0.4       | Linux Ubuntu 20.04 |
+| web-1      | DVWA        | 10.0.0.5       | Linux Ubuntu 20.04 |
+| web-2      | DVWA        | 10.0.0.6       | Linux Ubuntu 20.04 |
+| web-3      | DVWA        | 10.0.0.7       | Linux Ubuntu 20.04 |
+| elk-server | ELK Stack   | 10.1.0.4       | Linux Ubuntu 20.04 |
 
 ### Access Policies
 
