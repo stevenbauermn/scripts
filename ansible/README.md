@@ -5,12 +5,12 @@ Scripts, diagrams and documentation used to deploy an ELK Stack deployment in Az
 
 The files in this repository were used to configure the network depicted below.
 
-![Azure ELK Stack Diagram](/images/diagram_filename.png)
+![Azure ELK Stack Diagram](./images/diagram_filename.png)
 
 These files have been tested and used to generate a live ELK Stack deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the `yml` files may be used to install only certain pieces of it, such as Filebeat.
 
   - _TODO: Enter the playbook file._
-[Ansible yml playbook](/dvwa/install-dvwa.yml)
+[Install DVWA Web Server Playbook](./dvwa/install-dvwa.yml)
 
 This document contains the following details:
 - Description of the Topology
