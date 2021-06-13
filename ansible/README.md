@@ -5,7 +5,7 @@ Scripts, diagrams and documentation used to deploy an ELK Stack deployment in Az
 
 The files in this repository were used to configure the network depicted below.
 
-(images/diagram_filename.png)
+(scripts/images/diagram_filename.png)
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the _____ file may be used to install only certain pieces of it, such as Filebeat.
 
