@@ -8,13 +8,17 @@ The files in this repository were used to configure the network depicted below.
 
 These files have been tested and used to generate a live ELK Stack deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the `yml` files may be used to install only certain pieces of it, such as Filebeat.
 
-[Install DVWA Web Server Playbook](./dvwa/install-dvwa.yml)
+[Used `install-dvwa.yml` to install DVWA Web Servers.](./dvwa/install-dvwa.yml)
 
-[Install ELK Stack Server Playbook](./ELK/install-elk.yml)
+[Used `elk-playbook.yml` to install ELK Stack Server.](./ELK/elk-playbook.yml)
 
-[Install Filebeat Syslog Service Playbook](./Filebeat/filebeat-playbook.yml)
+[Modified `filebeat-config.yml` which was copied to the web servers `filebeat.yml` to configure the Filebeat service.](./Filebeat/filebeat-config.yml)
 
-[Install Docker Metrics Service Playbook](./Metricbeat/metricbeat-playbook.yml)
+[Used `filebeat-playbook.yml` to install Filebeat Syslog Service on web servers.](./Filebeat/filebeat-playbook.yml)
+
+[Modifired `metricbeat-config.yml` which was copied to the web server as `metricbeat.yml` to configure Metricbeat service.](./Metricbeat/metricbeat-config.yml)
+
+[Used `metricbeat-playbook.yml` to install Metricbeat Metrics Service on web servers](./Metricbeat/metricbeat-playbook.yml)
 
 This document contains the following details:
 - Description of the Topology
@@ -83,9 +87,11 @@ The following screenshot displays the result of running `docker ps` after succes
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- 10.0.0.5
-- 10.0.0.6
-- 10.0.0.7
+````bash
+10.0.0.5
+10.0.0.6
+10.0.0.7
+````
 
 We have installed the following Beats on these machines:
 - Filebeat
@@ -111,3 +117,283 @@ Navigating to http://104.210.155.66/app/kibana successfully ensures the ELK Serv
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
 
+### Commands used to install the ELK Stack, Filebeat, and Metric Beat.
+
+#### 1. Connecting to the Jump Box and attachin to the Ansible Container
+
+- SSH into into the Jump-Box using `ssh sysadmin@20.80.23.88`
+
+- Locate the container name:
+
+  ```bash
+  sysadmin@Jump-Box-Provisioner:~$ sudo docker container list -a
+  CONTAINER ID   IMAGE                          COMMAND                  CREATED       STATUS                   PORTS     NAMES                     
+  34a0f498a3fc   cyberxsecurity/ansible         "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 4 hours ago             eager_ramanujan
+  ```
+
+- Start the container:
+sysadmin@Jump-Box-Provisioner:~$ sudo docker container start eager_ramanujan
+
+- Connect to the Ansible container:
+
+  ```bash
+  sysadmin@Jump-Box-Provisioner:~$ sudo docker container attach eager_ramanujan
+  root@34a0f498a3fc:~#
+  ```
+
+#### 2. Downloading and Configuring the Container
+In this step, you had to:
+- Add the ELK Server IP address to the Ansible `/etc/ansible/hosts` file creating an `[elk]` section with the IP address:
+  - Open `hosts` file:
+
+    ````bash
+    root@34a0f498a3fc:~# nano /etc/ansible/hosts
+    ````
+  
+  - Add the `[elk]` section with the IP address:
+  
+    ````bash
+    [elk]
+    10.1.0.4
+    ````
+
+- The Ansible playbook used to install and configure the `elk` contaiiner on the ELK Server virtual machine.
+ 
+  ```bash
+ root@34a0f498a3fc:~# nano /etc/ansible/roles/elk-playbook.yml
+ 
+ - The tasks added in order to setup the ELK Stack are found in the [`elk-playbook.yml`](./ELK/elk-playbook.yml) file with commets `#` sperating the tasks.
+
+#### 2. Launching and Exposing the Container 
+
+Your Ansible output should resemble the output below and not contain any errors:
+
+```bash
+root@34a0f498a3fc:/etc/ansible/roles# ansible-playbook elk-playbook.yml
+
+PLAY [Configure Elk VM with Docker] ****************************************************
+
+TASK [Gathering Facts] *****************************************************************
+ok: [10.1.0.4]
+
+TASK [Install docker.io] ***************************************************************
+changed: [10.1.0.4]
+
+TASK [Install python3-pip] *************************************************************
+changed: [10.1.0.4]
+
+TASK [Install Docker module] ***********************************************************
+changed: [10.1.0.4]
+
+TASK [Increase virtual memory] *********************************************************
+changed: [10.1.0.4]
+
+TASK [Increase virtual memory on restart] **********************************************
+changed: [10.1.0.4]
+
+TASK [download and launch a docker elk container] **************************************
+changed: [10.1.0.4]
+
+TASK [Enable service docker on boot] **************************************
+changed: [10.1.0.4]
+
+PLAY RECAP *****************************************************************************
+10.1.0.4                   : ok=1    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```
+
+- SSH from your Ansible container to your ELK machine to verify the connection before you run your playbook.
+
+- After the ELK container is installed, SSH to your container and double check that your `elk-docker` container is running.
+
+Run `sudo docker ps`
+
+```bash
+sysadmin@elk:~$ sudo docker ps
+CONTAINER ID    IMAGE         COMMAND                  CREATED      STATUS         PORTS                                                                              NAMES
+302324cc1367   sebp/elk:761   "/usr/local/bin/star…"   9 days ago   Up 2 minutes   0.0.0.0:5044->5044/tcp, 0.0.0.0:5601->5601/tcp, 0.0.0.0:9200->9200/tcp, 9300/tcp   elk
+sysadmin@elk-server:~$
+```
+- First, make sure the ELK server container is up and running.
+  - Navigate to http://104.210.155.66:5601/app/kibana. Use the public IP address of the ELK server from Azure.
+
+#### 3. Installing Filebeat on the DVWA Containers
+
+
+- Navigate to http://104.210.155.66:5601/app/kibana. Use the public IP address of the ELK server from Azure.
+
+Install Filebeat on web servers:
+- Open ELK server homepage noted above.
+    - Click on **Add Log Data**.
+    - Choose **System Logs**.
+    - Click on the **DEB** tab under **Getting Started** to view the correct Linux Filebeat installation instructions.
+
+#### 4. Creating the Filebeat Configuration File
+
+Next, created a Filebeat configuration file and edit this file so that it has the correct settings for the ELK server.
+
+Open a terminal and SSH into your jump box:
+- Start the Ansible container.
+- SSH into the Ansible container.
+
+Copy the provided configuration file for Filebeat to your Ansible container: [Filebeat Configuration File Template](config_files/filebeat-config.yml).
+
+ - Note that when text is copy and pasted from the web into your terminal, formatting differences are likely to occur that will corrupt this configuration file.
+
+ - Using `curl` is a better way to avoid errors and we have the file hosted for public download [HERE](https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat)
+
+ - Run: `curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat >> /etc/ansible/filebeat-config.yml`
+
+ ```bash
+root@6160a9be360e:/etc/ansible# curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > filebeat-config.yml
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 73112  100 73112    0     0   964k      0 --:--:-- --:--:-- --:--:--  964k
+ ```
+
+Once you have this file on your Ansible container, edit this file as specified in the Filebeat instructions (the specific steps are also detailed below). 
+
+Edit the configuration in this file to match the settings described in the installation instructions for your server.
+
+- **Hint:** Instead of using Ansible to edit individual lines in the `/etc/filebeat/filebeat-config.yml` configuration file, it is easier to keep a copy of the entire configuration file (preconfigured) with your Ansible playbook and use the Ansible `copy` module to copy the preconfigured file into place.
+
+- Because we are connecting your webVM's to the ELK server, we need to edit the file to include your ELK server's IP address. 
+
+  - Note that the default credentials are `elastic:changeme` and should not be changed at this step.
+
+Scroll to line #1106 and replace the IP address with the IP address of your ELK machine.
+
+```bash
+output.elasticsearch:
+hosts: ["10.1.0.4:9200"]
+username: "elastic"
+password: "changeme"
+```
+
+Scroll to line #1806 and replace the IP address with the IP address of your ELK machine.
+
+```
+setup.kibana:
+host: "10.1.0.4:5601"
+```
+Save this file in  `/etc/ansible/files/filebeat-config.yml`.
+
+After you have edited the file, your settings should resemble the below. Your IP address may be different, but all other settings should be the same, including ports.
+
+  ```
+  output.elasticsearch:
+  hosts: ["10.1.0.4:9200"]
+  username: "elastic"
+  password: "changeme"
+
+  ...
+
+  setup.kibana:
+  host: "10.1.0.4:5601"
+  ```
+
+#### 5. Creating and running the Filebeat Installation Playbook file
+Create another Ansible playbook that accomplishes the Linux Filebeat installation instructions.
+
+- The playbook tasks performed on the web servers:
+  - Download the `.deb` file from [artifacts.elastic.co](https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-amd64.deb).
+  - Install the `.deb` file using the `dpkg` command shown below:
+    - `dpkg -i filebeat-7.6.1-amd64.deb`
+  - Copy the Filebeat configuration file from your Ansible container to your WebVM's where you just installed Filebeat.
+    - You can use the Ansible module `copy` to copy the entire configuration file into the correct place.
+    - You will need to place the configuration file in a directory called `files` in your Ansible directory.
+  - Run the `filebeat modules enable system` command.
+  - Run the `filebeat setup` command.
+  - Run the `service filebeat start` command.
+  - Enable the Filebeat service on boot.
+
+
+```bash
+root@1f08425a2967:/etc/ansible# ansible-playbook filebeat-playbook.yml
+
+PLAY [installing and launching filebeat] *******************************************************
+
+TASK [Gathering Facts] *************************************************************************
+ok: [10.0.0.4]
+ok: [10.0.0.5]
+ok: [10.0.0.6]
+
+
+TASK [download filebeat deb] *******************************************************************
+[WARNING]: Consider using the get_url or uri module rather than running 'curl'.  If you need to
+use command because get_url or uri is insufficient you can add 'warn: false' to this command
+task or set 'command_warnings=False' in ansible.cfg to get rid of this message.
+
+changed: [10.0.0.4]
+changed: [10.0.0.5]
+changed: [10.0.0.6]
+
+TASK [install filebeat deb] ********************************************************************
+changed: [10.0.0.4]
+changed: [10.0.0.5]
+changed: [10.0.0.6]
+
+TASK [drop in filebeat.yml] ********************************************************************
+ok: [10.0.0.4]
+ok: [10.0.0.5]
+ok: [10.0.0.6]
+
+TASK [enable and configure system module] ******************************************************
+changed: [10.0.0.4]
+changed: [10.0.0.5]
+changed: [10.0.0.6]
+
+TASK [setup filebeat] **************************************************************************
+changed: [10.0.0.4]
+changed: [10.0.0.5]
+changed: [10.0.0.6]
+
+TASK [start filebeat service] ******************************************************************
+[WARNING]: Consider using the service module rather than running 'service'.  If you need to use
+command because service is insufficient you can add 'warn: false' to this command task or set
+'command_warnings=False' in ansible.cfg to get rid of this message.
+
+changed: [10.0.0.4]
+changed: [10.0.0.5]
+changed: [10.0.0.6]
+
+TASK [enable service filebeat on boot] **************************************************************************
+changed: [10.0.0.4]
+changed: [10.0.0.5]
+changed: [10.0.0.6]
+
+PLAY RECAP *************************************************************************************
+10.0.0.4                  : ok=7    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+10.0.0.5                  : ok=7    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+10.0.0.6                   : ok=7    changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+#### 6. Verifying Installation and Playbook 
+
+Next, you needed to confirm that the ELK stack was receiving logs. Navigate back to the Filebeat installation page on the ELK server GUI.
+- Verify that your playbook is running successfully.
+- On the same page, scroll to **Step 5: Module status** and click **Check Data**.
+- Scroll to the bottom and click on **Verify Incoming Data**.
+- ELK stack was successfully receiving logs as seen in the following sceenshot: 
+![](images/filbeat_success.png)
+
+
+
+
+### Bonus: Creating a Play to Install Metricbeat
+
+To update your Ansible playbook to install Metricbeat:
+
+From the homepage of your ELK site:
+- Click **Add Metric Data**.
+- Click **Docker Metrics**.
+- Click the **DEB** tab under **Getting Started** for the correct Linux instructions.
+
+- Download the [Metricbeat `.deb` file](https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.4.0-amd64.deb).
+
+- Use `dpkg` to install the `.deb` file.
+- Update and copy the provided [Metricbeat config file](https://gist.githubusercontent.com/slape/58541585cc1886d2e26cd8be557ce04c/raw/0ce2c7e744c54513616966affb5e9d96f5e12f73/metricbeat).
+- Run the `metricbeat modules enable docker` command.
+- Run the `metricbeat setup` command.
+- Run the `metricbeat -e` command.
+- Enable the Metricbeat service on boot.
+
+To verify that your play works as expected, on the Metricbeat installation page in the ELK server GUI, scroll to **Step 5: Module Status** and click **Check Data**.
