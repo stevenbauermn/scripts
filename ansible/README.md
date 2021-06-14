@@ -8,7 +8,7 @@ The files in this repository were used to configure the network depicted below.
 
 These files have been tested and used to generate a live ELK Stack deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the `yml` files may be used to install only certain pieces of it, such as Filebeat.
 
-[Used `install-dvwa.yml` to install DVWA Web Servers.](./dvwa/install-dvwa.yml)
+[Used `install-dvwa.yml` to install DVWA Web Servers.](./dvwa/dvwa-playbook.yml)
 
 [Used `elk-playbook.yml` to install ELK Stack Server.](./ELK/elk-playbook.yml)
 
@@ -142,6 +142,7 @@ sysadmin@Jump-Box-Provisioner:~$ sudo docker container start eager_ramanujan
   ```
 
 #### 2. Downloading and Configuring the Container
+
 In this step, you had to:
 - Add the ELK Server IP address to the Ansible `/etc/ansible/hosts` file creating an `[elk]` section with the IP address:
   - Open `hosts` file:
@@ -217,7 +218,6 @@ sysadmin@elk-server:~$
   - Navigate to http://104.210.155.66:5601/app/kibana. Use the public IP address of the ELK server from Azure.
 
 #### 3. Installing Filebeat on the DVWA Containers
-
 
 - Navigate to http://104.210.155.66:5601/app/kibana. Use the public IP address of the ELK server from Azure.
 
