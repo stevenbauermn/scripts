@@ -1,2 +1,2 @@
 # scripts
-Linux and Ansible scripts from my Cybersecurity class.
+Linux BASH scripts, Ansible Playbooks, ELK Stack Configurations, and Diagrams from my Cybersecurity class.
