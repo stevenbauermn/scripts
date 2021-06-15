@@ -292,7 +292,7 @@ host: "10.1.0.4:5601"
 root@34a0f498a3fc:~# nano /etc/ansible/roles/filebeat-playbook.yml
 ```
 
-- The Filebeat install and configuration tasks can be seen in the the [`filebeat-playbook.yml`](./filebeat/filebeat-playbook.yml) playbook to automate the deployment of Filebeat.
+- The Filebeat install and configuration tasks can be seen in the the [`filebeat-playbook.yml`](./Filebeat/filebeat-playbook.yml) playbook to automate the deployment of Filebeat.
   - Comments noted by the `#` indicate each task being performed.
   - Exit `nano` and save the playbook.
 
@@ -440,7 +440,7 @@ password: "changeme"
 root@34a0f498a3fc:~# nano /etc/ansible/roles/metricbeat-playbook.yml
 ```
 
-- The Metricbeat install and configuration tasks can be seen in the the [`metricbeat-playbook.yml`](./metricbeat/metricbeat-playbook.yml) playbook to automate the deployment of Metricbeat.
+- The Metricbeat install and configuration tasks can be seen in the the [`metricbeat-playbook.yml`](./Metricbeat/metricbeat-playbook.yml) playbook to automate the deployment of Metricbeat.
   - Comments noted by the `#` indicate each task being performed.
   - Exit `nano` and save the playbook.
 
