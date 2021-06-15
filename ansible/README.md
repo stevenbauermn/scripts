@@ -1,6 +1,7 @@
 ## Automated ELK Stack Deployment
 
 The files in this repository were used to configure the network depicted below.
+
 ![Azure ELK Stack Diagram](./images/azure_elk_stack_diagram.png)
 
 These files have been tested and used to generate a live ELK Stack deployment within Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the `yml` files may be used to install only certain pieces of it, such as Filebeat.
@@ -83,11 +84,11 @@ The following screenshot displays the result of running `docker ps` after succes
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-````bash
+```bash
 10.0.0.5
 10.0.0.6
 10.0.0.7
-````
+```
 
 Only these Beats were install on these machines:
 - Filebeat
@@ -117,123 +118,104 @@ Navigating to http://104.210.155.66/app/kibana successfully ensures the ELK Serv
   - SSH into into the Jump-Box using `ssh sysadmin@20.80.23.88`
 
   - Locate the container name:
-    ```bash
-    sysadmin@Jump-Box-Provisioner:~$ sudo docker container list -a
-    CONTAINER ID   IMAGE                          COMMAND                  CREATED       STATUS                   PORTS     NAMES                     
-    34a0f498a3fc   cyberxsecurity/ansible         "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 4 hours ago             eager_ramanujan
-    ```
+```bash
+sysadmin@Jump-Box-Provisioner:~$ sudo docker container list -a
+CONTAINER ID   IMAGE                          COMMAND                  CREATED       STATUS                   PORTS     NAMES                     
+34a0f498a3fc   cyberxsecurity/ansible         "/bin/sh -c /bin/bas…"   2 weeks ago   Exited (0) 4 hours ago             eager_ramanujan
+```
 
   - Start the container:
-    ````bash
-    sysadmin@Jump-Box-Provisioner:~$ sudo docker container start eager_ramanujan
-    root@34a0f498a3fc:~#
-    ````
+```bash
+sysadmin@Jump-Box-Provisioner:~$ sudo docker container start eager_ramanujan
+root@34a0f498a3fc:~#
+```
 
   - Attach (connect) to the Ansible container:
-    ````bash
-    sysadmin@Jump-Box-Provisioner:~$ sudo docker container attach eager_ramanujan
-    root@34a0f498a3fc:~#
-    ````
+```bash
+sysadmin@Jump-Box-Provisioner:~$ sudo docker container attach eager_ramanujan
+root@34a0f498a3fc:~#
+```
 
 ##### 2. Update the Ansible `hosts` file and create `yml` playbook file
   - Add the ELK Server IP address to the Ansible `/etc/ansible/hosts` file creating an `[elk]` section with the IP address:
   
   - Open `hosts` file:
-    ````bash
-    root@34a0f498a3fc:~# nano /etc/ansible/hosts
-    ````
+```bash
+root@34a0f498a3fc:~# nano /etc/ansible/hosts
+```
   
   - Add the `[elk]` section followed by the ELK Server IP address:
-    ````bash
-    [elk]
-    10.1.0.4
-    ````
+```bash
+[elk]
+10.1.0.4
+```
 
 - Create the Ansible playbook used to install and configure the `elk` container on the ELK Server virtual machine.
-  ````bash
-  root@34a0f498a3fc:~# nano /etc/ansible/roles/elk-playbook.yml
-  ````
+```bash
+root@34a0f498a3fc:~# nano /etc/ansible/roles/elk-playbook.yml
+```
 
   - The tasks added in order to the [`elk-playbook.yml`](./ELK/elk-playbook.yml) file install and setup the ELK Stack. 
     - Comments noted by the `#` indicate each task being performed.
 ##### 3. Running the Playbook and testing the results
   - Run the Ansible playbook:
-    ````bash
-    root@34a0f498a3fc:/etc/ansible/roles# ansible-playbook elk-playbook.yml
+```bash
+root@34a0f498a3fc:/etc/ansible/roles# ansible-playbook elk-playbook.yml
 
-    PLAY [Configure Elk VM with Docker] ****************************************************
+PLAY [Configure Elk VM with Docker] ****************************************************
 
-    TASK [Gathering Facts] *****************************************************************
-    ok: [10.1.0.4]
+TASK [Gathering Facts] *****************************************************************
+ok: [10.1.0.4]
 
-    TASK [Install docker.io] ***************************************************************
-    changed: [10.1.0.4]
+TASK [Install docker.io] ***************************************************************
+changed: [10.1.0.4]
 
-    TASK [Install python3-pip] *************************************************************
-    changed: [10.1.0.4]
+TASK [Install python3-pip] *************************************************************
+changed: [10.1.0.4]
 
-    TASK [Install Docker module] ***********************************************************
-    changed: [10.1.0.4]
+TASK [Install Docker module] ***********************************************************
+changed: [10.1.0.4]
 
-    TASK [Increase virtual memory] *********************************************************
-    changed: [10.1.0.4]
+TASK [Increase virtual memory] *********************************************************
+changed: [10.1.0.4]
 
-    TASK [Increase virtual memory on restart] **********************************************
-    changed: [10.1.0.4]
+TASK [Increase virtual memory on restart] **********************************************
+changed: [10.1.0.4]
 
-    TASK [download and launch a docker elk container] **************************************
-    changed: [10.1.0.4]
+TASK [download and launch a docker elk container] **************************************
+changed: [10.1.0.4]
 
-    TASK [Enable service docker on boot] **************************************
-    changed: [10.1.0.4]
+TASK [Enable service docker on boot] **************************************
+changed: [10.1.0.4]
 
-    PLAY RECAP *****************************************************************************
-    10.1.0.4                   : ok=1    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
-    ````
+PLAY RECAP *****************************************************************************
+10.1.0.4                   : ok=1    changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 
+```
 
   - After the ELK container is installed, SSH to your container and double check that your `elk-docker` container is running.
-    ````bash
-    root@34a0f498a3fc:/etc/ansible/roles# ssh sysadmin@10.1.0.4
-    sysadmin@elk:~$ sudo docker ps
-    CONTAINER ID    IMAGE         COMMAND                  CREATED      STATUS         PORTS                                                                              NAMES
-    302324cc1367   sebp/elk:761   "/usr/local/bin/star…"   9 days ago   Up 2 minutes   0.0.0.0:5044->5044/tcp, 0.0.0.0:5601->5601/tcp, 0.0.0.0:9200->9200/tcp, 9300/tcp   elk
-    sysadmin@elk-server:~$
-    ````
+```bash
+root@34a0f498a3fc:/etc/ansible/roles# ssh sysadmin@10.1.0.4
+sysadmin@elk:~$ sudo docker ps
+CONTAINER ID    IMAGE         COMMAND                  CREATED      STATUS         PORTS                                                                              NAMES
+302324cc1367   sebp/elk:761   "/usr/local/bin/star…"   9 days ago   Up 2 minutes   0.0.0.0:5044->5044/tcp, 0.0.0.0:5601->5601/tcp, 0.0.0.0:9200->9200/tcp, 9300/tcp   elk
+sysadmin@elk-server:~$
+```
 
   - First, make sure the ELK server container is up and running.
     - Navigate to http://104.210.155.66:5601/app/kibana to verfiy the ELK Stack is running
       - Use the public IP address of the ELK server from Azure.
 
-#### 3. Installing Filebeat on the web server virtual machines
-- Navigate to http://104.210.155.66:5601/app/kibana. Use the public IP address of the ELK server from Azure.
+##### Installing Filebeat on the web server virtual machines
+##### 1. Create the Filebeat Configuration File
+  - Steps start while `attached` to the Ansible container on the Jump box.
+    - See previous `1. Connected to the Jump Box and attach to the Ansible Container`
 
-Install Filebeat on web servers:
-- Open ELK server homepage noted above.
-    - Click on **Add Log Data**.
-    - Choose **System Logs**.
-    - Click on the **DEB** tab under **Getting Started** to view the correct Linux Filebeat installation instructions.
-
-##### 1. Creatir the Filebeat Configuration File
-
-Next, created a Filebeat configuration file and edit this file so that it has the correct settings for the ELK server.
-
-Open a terminal and SSH into your jump box:
-- Start the Ansible container.
-- SSH into the Ansible container.
-
-Copy the provided configuration file for Filebeat to your Ansible container: [Filebeat Configuration File Template](config_files/filebeat-config.yml).
-
- - Note that when text is copy and pasted from the web into your terminal, formatting differences are likely to occur that will corrupt this configuration file.
-
- - Using `curl` is a better way to avoid errors and we have the file hosted for public download [HERE](https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat)
-
- - Run: `curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat >> /etc/ansible/filebeat-config.yml`
-
+  - Copy filebeat-config.yml to the Ansible container.
  ```bash
-root@6160a9be360e:/etc/ansible# curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > filebeat-config.yml
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100 73112  100 73112    0     0   964k      0 --:--:-- --:--:-- --:--:--  964k
+ root@6160a9be360e:/etc/ansible# curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/files/filebeat-config.yml
+   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                  Dload  Upload   Total   Spent    Left  Speed
+ 100 73112  100 73112    0     0   964k      0 --:--:-- --:--:-- --:--:--  964k
  ```
 
 Once you have this file on your Ansible container, edit this file as specified in the Filebeat instructions (the specific steps are also detailed below). 
@@ -265,19 +247,20 @@ Save this file in  `/etc/ansible/files/filebeat-config.yml`.
 
 After you have edited the file, your settings should resemble the below. Your IP address may be different, but all other settings should be the same, including ports.
 
-  ```
-  output.elasticsearch:
-  hosts: ["10.1.0.4:9200"]
-  username: "elastic"
-  password: "changeme"
+ ```
+ output.elasticsearch:
+ hosts: ["10.1.0.4:9200"]
+ username: "elastic"
+ password: "changeme"
+ ...
 
-  ...
-
-  setup.kibana:
-  host: "10.1.0.4:5601"
-  ```
+ setup.kibana:
+ host: "10.1.0.4:5601"
+ ```
 
 #### 2. Create and run the Filebeat Installation Playbook file
+
+  - Note that when text is copy and pasted from the web into your terminal, formatting differences are likely to occur that will corrupt this configuration file.
 Create another Ansible playbook that accomplishes the Linux Filebeat installation instructions.
 
 - The playbook tasks performed on the web servers:
@@ -357,8 +340,10 @@ Next, you needed to confirm that the ELK stack was receiving logs. Navigate back
 - Verify that your playbook is running successfully.
 - On the same page, scroll to **Step 5: Module status** and click **Check Data**.
 - Scroll to the bottom and click on **Verify Incoming Data**.
-- ELK stack was successfully receiving logs as seen in the following sceenshot: 
-![Filebeat Success Status](.images/filebeat_success.png)
+- ELK stack was successfully receiving logs as seen in the following sceenshot:
+
+![Filebeat Success Status](./images/filebeat_success.png)
+![Metricbeat Success Status](./images/metricbeat_success.png)
 ### Bonus: Creating a Play to Install Metricbeat
 
 To update your Ansible playbook to install Metricbeat:
