@@ -54,7 +54,7 @@ The configuration details of each machine may be found below.
 
 The machines on the internal network are not exposed to the public Internet. 
 
-Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following Internet IP addresses: 67.4.81.30
+Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following Internet IP addresses: 67.4.81.30.
 
 Machines within the network can only be accessed by the Jump Box with the private IP address 10.0.0.4.
 
@@ -78,7 +78,7 @@ The playbook implements the following tasks:
 - Configure the ELK Server memory.
 - Download Docker ELK Container and configure it.
 
-The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
+The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance:
 ![docker ps results](./images/docker_ps_output.png)
 
 ### Target Machines & Beats
@@ -89,12 +89,12 @@ This ELK server is configured to monitor the following machines:
 10.0.0.7
 ````
 
-We have installed the following Beats on these machines:
+Only these Beats were install on these machines:
 - Filebeat
 - Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- System and application log details such Web Traffic is gathered by Filebeat.
+- System log and application log details which include details such as Web Traffic is gathered by Filebeat.
 - CPU, Memory, Disk, and Network and other top-like statics gathered Metricbeat.
 
 ### Using the Playbook
@@ -152,14 +152,13 @@ Navigating to http://104.210.155.66/app/kibana successfully ensures the ELK Serv
 - Create the Ansible playbook used to install and configure the `elk` container on the ELK Server virtual machine.
   ````bash
   root@34a0f498a3fc:~# nano /etc/ansible/roles/elk-playbook.yml
- ````
+  ````
 
   - The tasks added in order to the [`elk-playbook.yml`](./ELK/elk-playbook.yml) file install and setup the ELK Stack. 
     - Comments noted by the `#` indicate each task being performed.
-
-#### 3. Running the Playbook and testing the results
-  - The playbook is run as as follows:
-    ```bash
+##### 3. Running the Playbook and testing the results
+  - Run the Ansible playbook:
+    ````bash
     root@34a0f498a3fc:/etc/ansible/roles# ansible-playbook elk-playbook.yml
 
     PLAY [Configure Elk VM with Docker] ****************************************************
@@ -193,7 +192,7 @@ Navigating to http://104.210.155.66/app/kibana successfully ensures the ELK Serv
     ````
 
   - After the ELK container is installed, SSH to your container and double check that your `elk-docker` container is running.
-    ```bash
+    ````bash
     root@34a0f498a3fc:/etc/ansible/roles# ssh sysadmin@10.1.0.4
     sysadmin@elk:~$ sudo docker ps
     CONTAINER ID    IMAGE         COMMAND                  CREATED      STATUS         PORTS                                                                              NAMES
@@ -359,8 +358,7 @@ Next, you needed to confirm that the ELK stack was receiving logs. Navigate back
 - On the same page, scroll to **Step 5: Module status** and click **Check Data**.
 - Scroll to the bottom and click on **Verify Incoming Data**.
 - ELK stack was successfully receiving logs as seen in the following sceenshot: 
-![](images/filbeat_success.png)
-
+![Filebeat Success Status](.images/filebeat_success.png)
 ### Bonus: Creating a Play to Install Metricbeat
 
 To update your Ansible playbook to install Metricbeat:
