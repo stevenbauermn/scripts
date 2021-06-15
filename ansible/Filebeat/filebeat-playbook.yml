@@ -1,5 +1,5 @@
 ---
-- name: Installing and Launch Filebeat
+- name: Installing and Launching Filebeat
   hosts: webservers
   become: yes
   tasks:
