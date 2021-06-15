@@ -1,0 +1,75 @@
+Lucky_Duck_Investigations
+├── 3-HW-setup-evidence
+├── assemble_hw.sh
+├── Dealer_Schedules_0310
+│   ├── 0310_Dealer_schedule
+│   ├── 0311_Dealer_schedule
+│   ├── 0312_Dealer_schedule
+│   ├── 0313_Dealer_schedule
+│   ├── 0314_Dealer_schedule
+│   ├── 0315_Dealer_schedule
+│   ├── 0316_Dealer_schedule
+│   └── 0317_Dealer_schedule
+├── Player_Dealer_Correlation.zip
+├── Roulette_Loss_Investigation
+│   ├── Dealer_Analysis
+│   │   ├── 0310_Dealer_schedule
+│   │   ├── 0312_Dealer_schedule
+│   │   ├── 0315_Dealer_schedule
+│   │   ├── dealer_0310_0500.sh
+│   │   ├── dealer_0310_0800.sh
+│   │   ├── dealer_0310_1400.sh
+│   │   ├── dealer_0310_2000.sh
+│   │   ├── dealer_0310_2300.sh
+│   │   ├── dealer_0312_0500.sh
+│   │   ├── dealer_0312_0800.sh
+│   │   ├── dealer_0312_1400.sh
+│   │   ├── dealer_0312_2000.sh
+│   │   ├── dealer_0312_2300.sh
+│   │   ├── dealer_0315_0500.sh
+│   │   ├── dealer_0315_0800.sh
+│   │   ├── dealer_0315_1400.sh
+│   │   ├── Dealers_working_during_losses
+│   │   ├── Notes_Dealer_Analysis
+│   │   ├── roulette_dealer_finder_by_time_and_game.sh
+│   │   └── roulette_dealer_finder_by_time.sh
+│   ├── Player_Analysis
+│   │   ├── 0310_win_loss_player_data
+│   │   ├── 0312_win_loss_player_data
+│   │   ├── 0315_win_loss_player_data
+│   │   ├── Notes_Player_Analysis
+│   │   ├── Roulette_Losses
+│   │   └── wf.sh
+│   └── Player_Dealer_Correlation
+│       ├── dealer_0310_0500.sh
+│       ├── dealer_0310_0800.sh
+│       ├── dealer_0310_1400.sh
+│       ├── dealer_0310_2000.sh
+│       ├── dealer_0310_2300.sh
+│       ├── dealer_0312_0500.sh
+│       ├── dealer_0312_0800.sh
+│       ├── dealer_0312_1400.sh
+│       ├── dealer_0312_2000.sh
+│       ├── dealer_0312_2300.sh
+│       ├── dealer_0315_0500.sh
+│       ├── dealer_0315_0800.sh
+│       ├── dealer_0315_1400.sh
+│       ├── Dealers_working_during_losses
+│       ├── hw_directory_structure
+│       ├── Notes_Dealer_Analysis
+│       ├── Notes_Player_Analysis
+│       ├── Notes_Player_Dealer_Correlation
+│       ├── roulette_dealer_finder_by_time_and_game.sh
+│       ├── roulette_dealer_finder_by_time.sh
+│       └── Roulette_Losses
+└── Roulette_Player_WinLoss_0310
+    ├── 0310_win_loss_player_data
+    ├── 0311_win_loss_player_data
+    ├── 0312_win_loss_player_data
+    ├── 0313_win_loss_player_data
+    ├── 0314_win_loss_player_data
+    ├── 0315_win_loss_player_data
+    ├── 0316_win_loss_player_data
+    └── 0317_win_loss_player_data
+
+6 directories, 67 files
