@@ -518,4 +518,4 @@ PLAY RECAP *********************************************************************
 
 ### Metricbeat was successfully sengin data to the ELK stack the screenshots above
 
-## **Thank you for checking this out, I learned a lot in creating it**
+## **Thank you for checking this out, I learned a lot in creating it!**
