@@ -30,7 +30,7 @@
       command: sysctl -w vm.max_map_count=262144
 
       # Use sysctl module
-    - name: Use more memory
+    - name: Increase virtual memory on restart
       sysctl:
         name: vm.max_map_count
         value: "262144"
