@@ -33,9 +33,9 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 
 Load balancing ensures that the application will be highly available, in addition to restricting access to the network. A Load Balancers is also one way to mitigate a DoS as it can balance the load accross many web application servers. Typically load balancers include a **health probe** to check all of the servers in its pool are functioning appropriately before sending traffic to them or it will stop sending traffic to missing or poor performing servers.
 
-A Jump Box is similar to a gateway router as it becomes a single point of a protected network exposed to the public network as it sits in front of the other machines that are not exposed to the Internet. To further control access only specified IP addresses and port `22` are allowed access to the Jump Box. SSH has it is security issues and that is why asynchronous encryption keys were used to ensure a higher degree of protection than usernames and passwords. 
+A Jump Box is similar to a gateway router as it becomes a single point of a protected network exposed to the public network as it sits in front of the other machines that are not exposed to the Internet. To further control access only specified IP addresses and port `22` are allowed access to the Jump Box. SSH has its security issues which is why asynchronous encryption keys were used to ensure a higher degree of protection than usernames and passwords.
 
-Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the machine metrics and system logs. 
+Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the machine metrics and system logs.
 
 Filebeat is used to capture system logs or file locations you specify then sending data to the ELK Server for indexing and review.
 
@@ -54,7 +54,7 @@ The configuration details of each machine may be found below.
 
 ### Access Policies
 
-The machines on the internal network are not exposed to the public Internet. 
+The machines on the internal network are not exposed to the public Internet.
 
 Only the Jump Box machine can accept connections from the Internet. Access to this machine is only allowed from the following Internet IP addresses: 67.4.81.30.
 
@@ -208,7 +208,7 @@ changed: [10.1.0.4]
 TASK [download and launch a docker elk container] **************************************
 changed: [10.1.0.4]
 
-TASK [Enable service docker on boot] **************************************
+TASK [Enable service docker on boot] ***************************************************
 changed: [10.1.0.4]
 
 PLAY RECAP *****************************************************************************
@@ -226,7 +226,7 @@ sysadmin@elk-server:~$
 ```
 
 - First, make sure the ELK server container is up and running.
-  - Navigate to http://104.210.155.66:5601/app/kibana to verify the ELK Stack is running
+  - Navigate to <http://104.210.155.66:5601/app/kibana> to verify the ELK Stack is running
   - Use the public IP address of the ELK server from Azure.
 
 ### II. Installing Filebeat on the webserver virtual machines
@@ -234,7 +234,7 @@ sysadmin@elk-server:~$
 #### 1. Create the Filebeat Configuration File
 
 - Stay `attached` to the Ansible container on the Jump box.
-  - See `I. Step 1. Connected to the Jump Box and attach to the Ansible container`
+  - See `Step I. Install the ELK Stack on the elk server step 1. Connected to the Jump Box and attach to the Ansible container` for steps to attach to the Ansible container.
 
   - Copy filebeat-config.yml to the Ansible container.
 
@@ -363,7 +363,7 @@ PLAY RECAP *********************************************************************
 
 #### 4. Verifying Filebeat Installation
 
-- Go to the Kibana website http://104.210.155.66:5601/app/kibana to verify that the ELK Stack is running and receiving data.
+- Go to the Kibana website <http://104.210.155.66:5601/app/kibana> to verify that the ELK Stack is running and receiving data.
   - Click on **Add Log Data**.
   - Choose **System Logs**.
   - Click on the **DEB** tab under **Getting Started** where you will see the Linux Filebeat installation instructions.
@@ -382,7 +382,7 @@ PLAY RECAP *********************************************************************
 #### 1. Create the Metricbeat Configuration File
 
 - Stay `attached` to the Ansible container on the Jump box.
-  - See `I. Step 1. Connected to the Jump Box and attach to the Ansible container`
+  - See `Step I. Install the ELK Stack on the elk server step 1. Connected to the Jump Box and attach to the Ansible container` for steps to attach to the Ansible container.
 
   - Copy metric-config.yml to the Ansible container.
 
@@ -518,4 +518,4 @@ PLAY RECAP *********************************************************************
 
 ### Metricbeat was successfully sengin data to the ELK stack the screenshots above
 
-## Thank you for checking this out, I learned a lot in creating it
+## **Thank you for checking this out, I learned a lot in creating it**
