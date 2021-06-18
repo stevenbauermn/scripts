@@ -31,9 +31,9 @@ This document contains the following details:
 
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
-Load balancing ensures that the application will be highly available, in addition to restricting access to the network. A Load Balancers is also one way to mitigate a DoS as it can balance the load accross many web application servers. Typically load balancers include a **health probe** to check all of the servers in its pool are functioning appropriately before sending traffic to them or it will stop sending traffic to missing or poor performing servers.
+Load balancing ensures a web application is highly available across multiple web application servers restricting unecessary access to the Internet. A Load Balancers also may mitigate some DoS attacks as it can balance the load across many web application servers. Typically load balancers include a **health probe** to check all of the servers in its pool are functioning appropriately before sending traffic to them or it will stop sending traffic to missing or poor performing servers providing better uptime for the web application.
 
-A Jump Box is similar to a gateway router as it becomes a single point of a protected network exposed to the public network as it sits in front of the other machines that are not exposed to the Internet. To further control access only specified IP addresses and port `22` are allowed access to the Jump Box. SSH has its security issues which is why asynchronous encryption keys were used to ensure a higher degree of protection than usernames and passwords.
+A Jump Box is similar to a gateway router as it becomes a single point of a protected network exposed to the public network as it sits in front of the other machines that are not exposed to the Internet. To further control access only specified IP addresses and port `22` are allowed access to the Jump Box. To avoid the username and password weakness of SSH we used asynchronous encryption keys to ensure a higher degree of protection than usernames and passwords.
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the machine metrics and system logs.
 
@@ -292,7 +292,7 @@ host: "10.1.0.4:5601"
 root@34a0f498a3fc:~# nano /etc/ansible/roles/filebeat-playbook.yml
 ```
 
-- The Filebeat install and configuration tasks can be seen in the the [`filebeat-playbook.yml`](./Filebeat/filebeat-playbook.yml) playbook to automate the deployment of Filebeat.
+- The Filebeat install and configuration tasks can be seen in the [`filebeat-playbook.yml`](./Filebeat/filebeat-playbook.yml) playbook to automate the deployment of Filebeat.
   - Comments noted by the `#` indicate each task being performed.
   - Exit `nano` and save the playbook.
 
@@ -407,7 +407,7 @@ setup.kibana:
 host: "10.1.0.4:5601"
 ```
 
-- Scroll to line #95 to set the IP of the ELK Server and leaving the port `:9200` in place.
+- Scroll to line #95 to set the IP of the ELK Server leaving the port `:9200` in place.
   - Note that the default credentials are `elastic:changeme` and should be changed to the proper `username` and `password`.
 
 ```bash
@@ -440,7 +440,7 @@ password: "changeme"
 root@34a0f498a3fc:~# nano /etc/ansible/roles/metricbeat-playbook.yml
 ```
 
-- The Metricbeat install and configuration tasks can be seen in the the [`metricbeat-playbook.yml`](./Metricbeat/metricbeat-playbook.yml) playbook to automate the deployment of Metricbeat.
+- The Metricbeat install and configuration tasks can be seen in the [`metricbeat-playbook.yml`](./Metricbeat/metricbeat-playbook.yml) playbook to automate the deployment of Metricbeat.
   - Comments noted by the `#` indicate each task being performed.
   - Exit `nano` and save the playbook.
 
@@ -516,6 +516,6 @@ PLAY RECAP *********************************************************************
 
 ![Metricbeat Dashboard](./Images/metricbeat_dashboard.png)
 
-### Metricbeat was successfully sengin data to the ELK stack the screenshots above
+### Metricbeat was successfully sending data to the ELK stack the screenshots above
 
 ## **Thank you for checking this out, I learned a lot in creating it!**
