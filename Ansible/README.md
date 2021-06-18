@@ -2,7 +2,7 @@
 
 The files in this repository were used to configure the network depicted below.
 
-![Azure ELK Stack Diagram](./images/azure_elk_stack_diagram.png)
+![Azure ELK Stack Diagram](./Images/azure_elk_stack_diagram.png)
 
 These files have been tested and used to generate a live ELK Stack deployment within Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the `yml` files may be used to install only certain pieces of it, such as Filebeat.
 
@@ -82,7 +82,7 @@ The playbook implements the following tasks:
 - Download Docker ELK Container and configure it.
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance:
-![docker ps results](./images/docker_ps_output.png)
+![docker ps results](./Images/docker_ps_output.png)
 
 ## Target Machines & Beats
 
@@ -369,11 +369,11 @@ PLAY RECAP *********************************************************************
   - Click on the **DEB** tab under **Getting Started** where you will see the Linux Filebeat installation instructions.
   - Scroll **Module status** and click **Check Data** to ensure we get a check by the **Module status**.
 
-![Filebeat Success Status](./images/filebeat_success.png)
+![Filebeat Success Status](./Images/filebeat_success.png)
 
 - Scroll to the bottom and click on **System logs dashboard** to see Kibana presenting System Log data.
 
-![Filebeat Dashboard](./images/filebeat_dashboard.png)
+![Filebeat Dashboard](./Images/filebeat_dashboard.png)
 
 ### Success ELK stack was receiving log data as seen in the screenshots above
 
@@ -510,11 +510,11 @@ PLAY RECAP *********************************************************************
   - Click the **DEB** tab under **Getting Started** where you will see Linux Metricbeat instructions.
   - Scroll **Module status** and click **Check Data** to ensure we get a check by the **Module status**.
 
-![Metricbeat Success Status](./images/metricbeat_success.png)
+![Metricbeat Success Status](./Images/metricbeat_success.png)
 
 - Scroll to the bottom and click on **Docker metrics dashboard**.
 
-![Metricbeat Dashboard](./images/metricbeat_dashboard.png)
+![Metricbeat Dashboard](./Images/metricbeat_dashboard.png)
 
 ### Metricbeat was successfully sengin data to the ELK stack the screenshots above
 
