@@ -119,7 +119,7 @@ The Ansible playbook files were `<role>-playbook.yml` files located on the Jump 
 
 To update specific machines we edited the `/etc/ansible/hosts` by ensuring the `[header]` element is not commented out with a `#` or needs to be created then the `hostname/IP` of the machines are added to the file for Ansible to target groups of machines.
 
-Navigating to http://104.210.155.66/app/kibana successfully ensures the ELK Server is running and is ready for use.
+Navigating to <http://104.210.155.66/app/kibana> successfully ensures the ELK Server is running and is ready for use.
 
 ## Commands used to install the ELK Stack, Filebeat, and Metricbeat
 
@@ -504,7 +504,7 @@ PLAY RECAP *********************************************************************
 
 #### 4. Verifying Metric Beat Installation
 
-- Go to the Kibana website http://104.210.155.66:5601/app/kibana to verify that the ELK Stack is running and receiving data.
+- Go to the Kibana website <http://104.210.155.66:5601/app/kibana> to verify that the ELK Stack is running and receiving data.
   - Click **Add Metric Data**.
   - Click **Docker Metrics**.
   - Click the **DEB** tab under **Getting Started** where you will see Linux Metricbeat instructions.
